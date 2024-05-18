@@ -1,3 +1,7 @@
+// Esse arquivo define as configurações que seram utilizadas  no bando de dados
+// como nome, linguagem, host, senha, nome de usuario, campos com datas.
+
+
 require('dotenv').config()
 
 module.exports = {
