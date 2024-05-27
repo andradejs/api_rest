@@ -22,10 +22,10 @@ export default class User extends Model {
       email: {
         type: Sequelize.STRING,
         defaultValue: '',
-        unique: {
-          msg: "Email já existente"
+
+        unique:{
+          msg: "Email já existe"
         },
-        allowNull: false,
         validate: {
 
           isEmail: {
@@ -53,10 +53,15 @@ export default class User extends Model {
     }, {
       sequelize
     });
-    this.addHook('afterSave', async user => {
-      user.password_hash = await bcryptjs.hashSync(user.password, 8)
+    this.addHook('beforeSave', async user => {
+      if (user.password){
+        user.password_hash = await bcryptjs.hash(user.password, 8)
+
+      }
+
+
     })
-    await sequelize.sync();
+    await sequelize.sync({force: true});
     return this;
   }
 }
